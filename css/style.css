@@ -1,0 +1,83 @@
+.auth_form {
+    margin: 0 auto;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+}
+
+.auth_btn {
+    width: 150px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    
+}
+
+.auth_title {
+    margin-bottom: 10px;
+}
+
+label {
+    text-align: left;
+}
+
+input {
+    border: unset;
+    border-bottom: 2px solid grey;
+    outline: none;
+}
+
+.auth_input {
+    margin: 10px 0px;
+}
+
+.reg_form {
+    margin: 0 auto;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    
+}
+
+.reg_btn {
+    width: 200px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    
+}
+
+.reg_title {
+    margin-bottom: 10px;
+}
+
+.reg_input {
+    margin: 10px 0px;
+}
+
+button:hover {
+    background: rgb(6, 215, 6);
+}
+
+.msg {
+    margin: 0 auto;
+    border: 2px solid rgb(236, 120, 66);
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    width: 400px;
+}
+
+.none {
+    display: none;
+}
+
+.error {
+    border-bottom: 2px solid red;
+}

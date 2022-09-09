@@ -1,0 +1,17 @@
+[
+{"type":"header","version":"5.1.0","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"myphp"},
+{"type":"table","name":"users","database":"myphp","data":
+[
+{"id":"38","login":"CoolMan","e-mail":"Assad11111@mail.ru","password":"e0b406713e240c994fba79dd4569da1d","name":"Drake"},
+{"id":"39","login":"CoolMan1","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Андрей"},
+{"id":"40","login":"CoolMan123","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Андрей"},
+{"id":"41","login":"CoolMan1234","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Drake"},
+{"id":"42","login":"CoolMan12344","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Drake"},
+{"id":"43","login":"CoolMan123445","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Drake"},
+{"id":"44","login":"CoolMan2","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Drake"},
+{"id":"45","login":"CoolMan3","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Андрей"},
+{"id":"46","login":"CoolMan4","e-mail":"Assad11111@mail.ru","password":"4297f44b13955235245b2497399d7a93","name":"Андрей"}
+]
+}
+]
