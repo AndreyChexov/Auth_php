@@ -21,7 +21,8 @@ $('.auth_btn').click(function(e) {
 
             if(data.status) {
                 document.location.href = '/profile.php';
-            } else {
+            }
+             else {
 
                 if(data.type === 1) {
                    data.fields.forEach(field => {

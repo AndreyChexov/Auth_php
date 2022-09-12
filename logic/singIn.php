@@ -5,7 +5,7 @@ require_once 'connect.php';
 
     $login = $_POST['login'];
     $password = $_POST['password'];
-    
+
 
          $errors = [];
 
@@ -32,8 +32,29 @@ require_once 'connect.php';
 
    
 
-    $password = md5($password);
+     $password = md5($password);
+
+   
+
+
     $check = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login' AND `password` = '$password'");
+        
+        $file = file_get_contents('db.json');
+
+        $list = json_decode($file, true);
+
+        for($i = 0; $i < count($list); $i++) {
+
+            if($list[$i]['login'] === $login && $list[$i]['password'] === $password) {
+                header('Location: ../profile.php');
+
+            } else {
+                
+                header('Location: ../index.php');
+                echo 'Something wrong...';  
+            }
+        }
+
 
     if(mysqli_num_rows($check) > 0) {
 
@@ -49,8 +70,9 @@ require_once 'connect.php';
             "status" => true
         ];
 
+
         echo json_encode($response);
-        
+      
 
     } else {
         $response = [
