@@ -1,10 +1,11 @@
 <?php
 
 session_start();
-require_once 'connect.php';
+// require_once 'connect.php';
 
     $login = $_POST['login'];
     $password = $_POST['password'];
+    
 
 
          $errors = [];
@@ -34,55 +35,74 @@ require_once 'connect.php';
 
      $password = md5($password);
 
+     $file = file_get_contents('db.json');
+
+     $list = json_decode($file, true);
+     
+
+     for($i = 0; $i < count($list); $i++) {
+
+
+         if($list[$i]['login'] === $login && $list[$i]['password'] === $password) {
+
+            $_SESSION['user'] = [
+                "name" => $list[$i]['name']
+            ];
+    
+            
+            $response = [
+                "status" => true
+            ];
+
+            echo json_encode($response);
+            
+            
+         } else {
+             
+             header('Location: ../index.php');
+             $response =  [
+                "status" => false,
+                "message" => 'Неверный логин или пароль',
+            ];
+
+            echo json_encode($response); 
+         }
+         
+     }
+
    
 
 
-    $check = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login' AND `password` = '$password'");
+    // $check = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login' AND `password` = '$password'");
         
-        $file = file_get_contents('db.json');
+    
+    // if(mysqli_num_rows($check) > 0) {
 
-        $list = json_decode($file, true);
+    //     $user = mysqli_fetch_assoc($check);
 
-        for($i = 0; $i < count($list); $i++) {
+    //     $_SESSION['user'] = [
+    //         "id" => $user['id'],
+    //         "name" => $user['name'],
+    //         "email" => $user['email']
+    //     ];
 
-            if($list[$i]['login'] === $login && $list[$i]['password'] === $password) {
-                header('Location: ../profile.php');
-
-            } else {
-                
-                header('Location: ../index.php');
-                echo 'Something wrong...';  
-            }
-        }
-
-
-    if(mysqli_num_rows($check) > 0) {
-
-        $user = mysqli_fetch_assoc($check);
-
-        $_SESSION['user'] = [
-            "id" => $user['id'],
-            "name" => $user['name'],
-            "email" => $user['email']
-        ];
-
-        $response = [
-            "status" => true
-        ];
+    //     $response = [
+    //         "status" => true
+    //     ];
 
 
-        echo json_encode($response);
+    //     echo json_encode($response);
       
 
-    } else {
-        $response = [
-            "status" => false,
-            "message" => 'Неверный логин или пароль'
-        ];
+    // } else {
+    //     $response = [
+    //         "status" => false,
+    //         "message" => 'Неверный логин или пароль'
+    //     ];
 
 
-        echo json_encode($response);
-    }
+    //     echo json_encode($response);
+    // }
 
 
 ?>

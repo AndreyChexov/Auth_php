@@ -14,7 +14,7 @@ $('.auth_btn').click(function(e) {
         dataType: 'json',
         data: {
             login: login,
-            password: password 
+            password: password
         },
         success: function (data) {
 

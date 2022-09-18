@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once 'connect.php';
+    // require_once 'connect.php';
 
 
     // Я только недавно начал изучение PHP, с ООП еще не до конца разобрался. Под закоментированным кодом будет все рабоатет, а с ООП не работает:( Не пойму почему...
@@ -165,7 +165,7 @@
     
 
 
-     $login = $_POST['login'];
+    $login = $_POST['login'];
     $password = $_POST['password'];
     $confirm = $_POST['confirm'];
     $email = $_POST['email'];
@@ -173,21 +173,21 @@
 
     $patternName = '/^[а-яёa-zA-Z]+$/iu';
 
-    $checkLogin = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login'");
+    // $checkLogin = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login'");
 
-    if(mysqli_num_rows($checkLogin) > 0) {
-        $response =  [
-            "status" => false,
-            "type" => 1,
-            "message" => 'Такой логин уже существует',
-            "fields" => ['login']
-        ];
+    // if(mysqli_num_rows($checkLogin) > 0) {
+    //     $response =  [
+    //         "status" => false,
+    //         "type" => 1,
+    //         "message" => 'Такой логин уже существует',
+    //         "fields" => ['login']
+    //     ];
 
-        echo json_encode($response);
+    //     echo json_encode($response);
 
-        die();
+    //     die();
 
-    }
+    // }
 
     $errors = [];
 
@@ -199,7 +199,7 @@
         $errors[] = 'password';
     }
 
-    if($confirm === '' || $password !== $confirm) {
+    if($confirm === '' || $confirm !== $password) {
         $errors[] = 'confirm';
     }
 
@@ -222,51 +222,86 @@
         echo json_encode($response);
 
         die();
-}
-     
-    
-        if($password === $confirm) {
 
-            $password = md5($password);
+    }
 
-            mysqli_query($connect, "INSERT INTO `users` (`id`, `login`, `e-mail`, `password`, `name`) VALUES (NULL, '$login', '$email', '$password', '$name')");
+    $password = md5($password);
+
+        $user = [
+        "login" => $login,
+        "password" => $password,
+        "email" => $email,
+        "name" => $name
+        ];
+
+
+        $file = file_get_contents('db.json');
         
+        $list = json_decode($file, true);
+
+        $list[] = $user;
+        
+        $postUser = file_put_contents('db.json', json_encode($list));
+
+        if(!empty($postUser)) {
             $response =  [
-                "status" => true,
-                "message" => 'Регистрация прошла успешно',
+                        "status" => true,
+                        "message" => 'Регистрация прошла успешно',
+                    ];
+        
+                    echo json_encode($response);
+        } else {
+            $response =  [
+                "status" => false,
+                "message" => 'Что-то пошло не так...',
             ];
 
             echo json_encode($response);
 
-            $user = [
-                "login" => $login,
-                "password" => $password,
-                "email" => $email,
-                "name" => $name
-                ];
+        }
+     
+    
+        // if($password === $confirm) {
+
+
+        //     mysqli_query($connect, "INSERT INTO `users` (`id`, `login`, `e-mail`, `password`, `name`) VALUES (NULL, '$login', '$email', '$password', '$name')");
+        
+        //     $response =  [
+        //         "status" => true,
+        //         "message" => 'Регистрация прошла успешно',
+        //     ];
+
+        //     echo json_encode($response);
+
+        //     $user = [
+        //         "login" => $login,
+        //         "password" => $password,
+        //         "email" => $email,
+        //         "name" => $name
+        //         ];
 
 
 
-                $file = file_get_contents('db.json');
+        //         $file = file_get_contents('db.json');
                 
-                $list = json_decode($file, true);
+        //         $list = json_decode($file, true);
 
-                $list[] = $user;
+        //         $list[] = $user;
                 
-                file_put_contents('db.json', json_encode($list));
+        //         file_put_contents('db.json', json_encode($list));
                  
             
               
                 
           
-        } else {
-            $response =  [
-                "status" => false,
-                "message" => 'Пароли не совпадают',
-            ];
+        // } else {
+        //     $response =  [
+        //         "status" => false,
+        //         "message" => 'Пароли не совпадают',
+        //     ];
 
-            echo json_encode($response);
-        }
+        //     echo json_encode($response);
+        // }
     
        
 
