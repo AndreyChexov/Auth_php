@@ -1,9 +1,6 @@
 <?php
     session_start();
     // require_once 'connect.php';
-
-
-    // Я только недавно начал изучение PHP, с ООП еще не до конца разобрался. Под закоментированным кодом будет все рабоатет, а с ООП не работает:( Не пойму почему...
     
 //     class User {
 //        protected $login = "";
@@ -165,11 +162,11 @@
     
 
 
-    $login = $_POST['login'];
-    $password = $_POST['password'];
-    $confirm = $_POST['confirm'];
-    $email = $_POST['email'];
-    $name = $_POST['name'];
+    $login = trim($_POST['login']);
+    $password = trim($_POST['password']);
+    $confirm = trim($_POST['confirm']);
+    $email = trim($_POST['email']);
+    $name = trim($_POST['name']);
 
     $patternName = '/^[а-яёa-zA-Z]+$/iu';
 
@@ -191,9 +188,9 @@
 
     $errors = [];
 
-    if($login === '' || strlen($login) < 6) {
+    if($login === '' || strlen($login) < 6 ) {
         $errors[] = 'login';
-    }
+    } 
 
     if($password === '' || strlen($password) < 6 || !preg_match('/^[a-zA-Z0-9]+$/', $password)) {
         $errors[] = 'password';
@@ -224,6 +221,9 @@
         die();
 
     }
+    
+    
+    
 
     $password = md5($password);
 
@@ -239,17 +239,50 @@
         
         $list = json_decode($file, true);
 
+                foreach($list as $usersLog) {
+                    
+                    if($userslog['login'] === $login) {
+                        $response =  [
+                            "status" => false,
+                            "message" => 'Такой логин уже существует'
+                        ];
+            
+                        echo json_encode($response);
+
+                        die();
+                    }
+                }
+
+                foreach($list as $usersEmail) {
+
+                    if($usersEmail['email'] === $email) {
+                        $response =  [
+                            "status" => false,
+                            "message" => 'Такой адрес электронной почты уже зарегистрирован'
+                        ];
+            
+                        echo json_encode($response);
+
+                        die();
+                    }
+                }
+
+
         $list[] = $user;
         
         $postUser = file_put_contents('db.json', json_encode($list));
 
         if(!empty($postUser)) {
+            
             $response =  [
                         "status" => true,
                         "message" => 'Регистрация прошла успешно',
                     ];
         
                     echo json_encode($response);
+
+                    
+              
         } else {
             $response =  [
                 "status" => false,
@@ -259,7 +292,10 @@
             echo json_encode($response);
 
         }
-     
+
+
+
+
     
         // if($password === $confirm) {
 

@@ -3,8 +3,8 @@
 session_start();
 // require_once 'connect.php';
 
-    $login = $_POST['login'];
-    $password = $_POST['password'];
+    $login = trim($_POST['login']);
+    $password = trim($_POST['password']);
     
 
 
@@ -38,40 +38,45 @@ session_start();
      $file = file_get_contents('db.json');
 
      $list = json_decode($file, true);
+
+
+            foreach($list as $items) {
+                
+                if($items['login'] === $login && $items['password'] === $password) {
+                                                    
+                            $response = [
+                                "status" => true
+                            ];
+                
+                            echo json_encode($response);
+
+                            $_SESSION['user'] = $items['name'];     
+                        
+                            break;
+
+                    }
+                
+            }
+
+
+            foreach($list as $items) {
+                
+                if($items['login'] !== $login && $items['password'] !== $password) {
+                                                
+                        
+                        $response =  [
+                            "status" => false,
+                            "message" => 'Неверный логин или пароль',
+                        ];
+
+                        echo json_encode($response); 
+                    
+                        break;
+
+                }
+        }
+ 
      
-
-     for($i = 0; $i < count($list); $i++) {
-
-
-         if($list[$i]['login'] === $login && $list[$i]['password'] === $password) {
-
-            $_SESSION['user'] = [
-                "name" => $list[$i]['name']
-            ];
-    
-            
-            $response = [
-                "status" => true
-            ];
-
-            echo json_encode($response);
-            
-            
-         } else {
-             
-             header('Location: ../index.php');
-             $response =  [
-                "status" => false,
-                "message" => 'Неверный логин или пароль',
-            ];
-
-            echo json_encode($response); 
-         }
-         
-     }
-
-   
-
 
     // $check = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login' AND `password` = '$password'");
         

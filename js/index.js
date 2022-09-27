@@ -18,12 +18,11 @@ $('.auth_btn').click(function(e) {
         },
         success: function (data) {
 
-
             if(data.status) {
                 document.location.href = '/profile.php';
             }
              else {
-
+            
                 if(data.type === 1) {
                    data.fields.forEach(field => {
                     $(`input[name = "${field}"]`).addClass('error');
@@ -31,6 +30,8 @@ $('.auth_btn').click(function(e) {
                 }
 
                 $('.msg').removeClass('none').text(data.message);
+                
+                document.querySelector('.auth_form').reset();
             }
             
         }
@@ -71,6 +72,7 @@ $('.reg_btn').click(function(e) {
 
             if(data.status) {
                 $('.msg').removeClass('none').text(data.message);
+                document.querySelector('.reg_form').reset();
             } else {
 
                 if(data.type === 1) {
