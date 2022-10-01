@@ -162,7 +162,7 @@
     
 
 
-    $login = trim($_POST['login']);
+    $login = preg_replace('/\s+/', '', $_POST['login']);
     $password = trim($_POST['password']);
     $confirm = trim($_POST['confirm']);
     $email = trim($_POST['email']);
@@ -188,7 +188,7 @@
 
     $errors = [];
 
-    if($login === '' || strlen($login) < 6 ) {
+    if($login === '' || strlen($login) < 6) {
         $errors[] = 'login';
     } 
 
@@ -239,19 +239,21 @@
         
         $list = json_decode($file, true);
 
-                foreach($list as $usersLog) {
-                    
-                    if($userslog['login'] === $login) {
-                        $response =  [
-                            "status" => false,
-                            "message" => 'Такой логин уже существует'
-                        ];
-            
-                        echo json_encode($response);
+                    foreach($list as $log) {
 
-                        die();
+                        if($log['login'] === $login) {
+                            $response =  [
+                                "status" => false,
+                                "message" => 'Такой логин уже существует'
+                            ];
+                
+                            echo json_encode($response);
+
+                            die();
+                        }
                     }
-                }
+
+
 
                 foreach($list as $usersEmail) {
 
